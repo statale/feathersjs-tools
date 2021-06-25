@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-feathersjs",
+  "version": "0.0.1",
+  "generators": {
+    "nx-feathersjs": {
+      "factory": "./src/generators/nx-feathersjs/generator",
+      "schema": "./src/generators/nx-feathersjs/schema.json",
+      "description": "nx-feathersjs generator"
+    }
+  }
+}

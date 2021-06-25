@@ -1,0 +1,78 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-feathersjs": {
+      "root": "packages/nx-feathersjs",
+      "sourceRoot": "packages/nx-feathersjs/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-feathersjs/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-feathersjs"],
+          "options": {
+            "jestConfig": "packages/nx-feathersjs/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-feathersjs",
+            "tsConfig": "packages/nx-feathersjs/tsconfig.lib.json",
+            "packageJson": "packages/nx-feathersjs/package.json",
+            "main": "packages/nx-feathersjs/src/index.ts",
+            "assets": [
+              "packages/nx-feathersjs/*.md",
+              {
+                "input": "./packages/nx-feathersjs/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-feathersjs/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-feathersjs",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-feathersjs",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-feathersjs-e2e": {
+      "root": "e2e/nx-feathersjs-e2e",
+      "projectType": "application",
+      "sourceRoot": "e2e/nx-feathersjs-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-feathersjs:build",
+            "npmPackageName": "@statale/nx-feathersjs",
+            "pluginOutputPath": "dist/packages/nx-feathersjs",
+            "jestConfig": "e2e/nx-feathersjs-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
