@@ -31,7 +31,10 @@
             "assets": ["packages/feathers-environment/*.md", "./LICENSE"],
             "generatePackageJson": true,
             "extractLicenses": true,
-            "externalDependencies": ["@feathersjs/feathers", "@feathersjs/commons"]
+            "externalDependencies": [
+              "@feathersjs/feathers",
+              "@feathersjs/commons"
+            ]
           }
         }
       }
