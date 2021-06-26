@@ -30,6 +30,8 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@feathersjs/commons": "^4.5.11",
+    "@feathersjs/feathers": "^4.5.11",
     "@nrwl/cli": "12.4.0",
     "@nrwl/devkit": "12.4.0",
     "@nrwl/eslint-plugin-nx": "12.4.0",

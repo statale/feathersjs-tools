@@ -1,6 +1,41 @@
 {
   "version": 2,
   "projects": {
+    "feathers-environment": {
+      "root": "packages/feathers-environment",
+      "sourceRoot": "packages/feathers-environment/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/feathers-environment/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/feathers-environment"],
+          "options": {
+            "jestConfig": "packages/feathers-environment/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/feathers-environment",
+            "tsConfig": "packages/feathers-environment/tsconfig.lib.json",
+            "packageJson": "packages/feathers-environment/package.json",
+            "main": "packages/feathers-environment/src/index.ts",
+            "assets": ["packages/feathers-environment/*.md", "./LICENSE"],
+            "generatePackageJson": true,
+            "extractLicenses": true,
+            "externalDependencies": ["@feathersjs/feathers", "@feathersjs/commons"]
+          }
+        }
+      }
+    },
     "nx-feathersjs": {
       "root": "packages/nx-feathersjs",
       "sourceRoot": "packages/nx-feathersjs/src",
@@ -29,6 +64,7 @@
             "packageJson": "packages/nx-feathersjs/package.json",
             "main": "packages/nx-feathersjs/src/index.ts",
             "assets": [
+              "./LICENSE",
               "packages/nx-feathersjs/*.md",
               {
                 "input": "./packages/nx-feathersjs/src",

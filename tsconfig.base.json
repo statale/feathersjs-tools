@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@statale/feathers-environment": [
+        "packages/feathers-environment/src/index.ts"
+      ],
       "statale/nx-feathersjs": ["packages/nx-feathersjs/src/index.ts"]
     }
   },

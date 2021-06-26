@@ -19,6 +19,9 @@
     }
   },
   "projects": {
+    "feathers-environment": {
+      "tags": []
+    },
     "nx-feathersjs": {
       "tags": []
     },

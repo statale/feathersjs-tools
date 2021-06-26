@@ -1,0 +1,27 @@
+{
+  "name": "@statale/feathers-environment",
+  "description": "adds configuration to a feathersjs application. agnostic to any config framework",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/statale/feathersjs-tools.git"
+  },
+  "keywords": [
+    "feathers",
+    "feathersjs",
+    "environment",
+    "config",
+    "configuration",
+    "init"
+  ],
+  "author": "Layton Whiteley",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/statale/feathersjs-tools/issues"
+  },
+  "homepage": "https://github.com/statale/feathersjs-tools/packages/feathers-environment#readme",
+  "peerDependencies": {
+    "@feathersjs/commons": ">=4.5.11",
+    "@feathersjs/feathers": ">=4.5.11"
+  }
+}
