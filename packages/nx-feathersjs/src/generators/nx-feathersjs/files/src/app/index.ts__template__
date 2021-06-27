@@ -1,0 +1,53 @@
+
+import * as compress from 'compression';
+import * as helmet from 'helmet';
+import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
+
+import feathers, { HookContext as FeathersHookContext } from '@feathersjs/feathers';
+import { environment } from '@statale/feathers-environment';
+import express from '@feathersjs/express';
+import socketio from '@feathersjs/socketio';
+
+import { Application } from './declarations';
+import logger from './logger';
+import middleware from './middleware';
+import services from './services';
+import appHooks from './app.hooks';
+import channels from './channels';
+import { environment as config } from '../environments/environment';
+
+// Don't remove this comment. It's needed to format import lines nicely.
+
+const app: Application = express(feathers());
+export type HookContext<T = unknown> = { app: Application } & FeathersHookContext<T>;
+
+// Load app configuration
+app.configure(environment({ config }));
+// Enable security, CORS, compression, favicon and body parsing
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
+app.use(cors());
+app.use(compress());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Set up Plugins and providers
+app.configure(express.rest());
+app.configure(socketio());
+
+// Configure other middleware (see `middleware/index.ts`)
+app.configure(middleware);
+// Set up our services (see `services/index.ts`)
+app.configure(services);
+// Set up event channels (see channels.ts)
+app.configure(channels);
+
+// Configure a middleware for 404s and the error handler
+app.use(express.notFound());
+app.use(express.errorHandler({ logger } as unknown));
+
+app.hooks(appHooks);
+
+export default app;

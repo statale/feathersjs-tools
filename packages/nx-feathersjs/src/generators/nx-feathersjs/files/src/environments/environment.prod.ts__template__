@@ -1,0 +1,9 @@
+export const environment = {
+production: true,
+"host": "localhost",
+  "port": 3030,
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+};

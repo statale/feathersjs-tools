@@ -66,6 +66,10 @@
             "tsConfig": "packages/nx-feathersjs/tsconfig.lib.json",
             "packageJson": "packages/nx-feathersjs/package.json",
             "main": "packages/nx-feathersjs/src/index.ts",
+            "extractLicenses": true,
+            "externalDependencies": [
+              "@nrwl/node"
+            ],
             "assets": [
               "./LICENSE",
               "packages/nx-feathersjs/*.md",

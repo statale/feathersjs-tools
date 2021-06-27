@@ -1,14 +1,16 @@
 import {
-  addProjectConfiguration,
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
   names,
   offsetFromRoot,
+  convertNxGenerator,
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
+import { applicationGenerator as nodeApplicationGenerator } from '@nrwl/node';
 import { NxFeathersjsGeneratorSchema } from './schema';
+import { initGenerator } from './init';
 
 interface NormalizedSchema extends NxFeathersjsGeneratorSchema {
   projectName: string;
@@ -26,7 +28,7 @@ function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(host).libsDir}/${projectDirectory}`;
+  const projectRoot = `${getWorkspaceLayout(host).appsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
@@ -55,22 +57,24 @@ function addFiles(host: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (
+export async function applicationGenerator (
   host: Tree,
   options: NxFeathersjsGeneratorSchema
 ) {
   const normalizedOptions = normalizeOptions(host, options);
-  addProjectConfiguration(host, normalizedOptions.projectName, {
-    root: normalizedOptions.projectRoot,
-    projectType: 'library',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    targets: {
-      build: {
-        executor: '@statale/nx-feathersjs:build',
-      },
-    },
-    tags: normalizedOptions.parsedTags,
+  const initTask = await initGenerator(host, { ...normalizedOptions, skipFormat: true });
+  const applicationTask = await nodeApplicationGenerator(host, {
+    ...options,
+    skipFormat: true,
   });
   addFiles(host, normalizedOptions);
   await formatFiles(host);
+
+  return async () => {
+    await initTask();
+    await applicationTask();
+  };
 }
+
+export default applicationGenerator;
+export const applicationSchematic = convertNxGenerator(applicationGenerator);
