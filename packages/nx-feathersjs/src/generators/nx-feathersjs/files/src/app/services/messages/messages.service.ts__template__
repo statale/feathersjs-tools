@@ -1,13 +1,13 @@
-// Initializes the `dogs` service on path `/dogs`
+// Initializes the `messages` service on path `/messages`
 import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
-import { Dogs } from './dogs.class';
-import hooks from './dogs.hooks';
+import { Messages } from './messages.class';
+import hooks from './messages.hooks';
 
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    'dogs': Dogs & ServiceAddons<any>;
+    'messages': Messages & ServiceAddons<unknown>;
   }
 }
 
@@ -17,10 +17,10 @@ export default function (app: Application): void {
   };
 
   // Initialize our service with any options it requires
-  app.use('/dogs', new Dogs(options, app));
+  app.use('/messages', new Messages(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('dogs');
+  const service = app.service('messages');
 
   service.hooks(hooks);
 }
